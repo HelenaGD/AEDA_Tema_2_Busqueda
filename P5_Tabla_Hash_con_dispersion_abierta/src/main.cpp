@@ -12,57 +12,57 @@ int main() {
 	FuncionDispersion<Clave> *fd;
 	TablaHash<Clave> *tabla;
 
-	int tamaño_tabla = 0;
+	int size_tabla = 0;
 	int tipo = 0;
 	int opcion = 0;
 
 	Clave elemento;
 
 	do {
-		std::cout << "Indique el tamaño de la tabla: ";
-		std::cin >> tamaño_tabla;
-	} while (tamaño_tabla <= 0);
+		std::cout << "\nIndique el tamaño de la tabla: ";
+		std::cin >> size_tabla;
+	} while (size_tabla <= 0);
 
 	do {
-		std::cout << "Indique el tipo de función de dispersión a utilizar: "
+		std::cout << "\nIndique el tipo de función de dispersión a utilizar:\n"
 		<< "(1) Función módulo\n(2) Función pseudoaleatoria\nOpción: ";
 		std::cin >> tipo;
 	} while ((tipo <= 0) && (tipo >2));
 
 	switch (tipo) {
 		case 1:
-			fd = new fdModulo<Clave>(tamaño_tabla);
+			fd = new fdModulo<Clave>(size_tabla);
 			break;
 		case 2:
-			fd = new fdPseudoaleatoria<Clave>(tamaño_tabla);
+			fd = new fdPseudoaleatoria<Clave>(size_tabla);
 	}
 
-	tabla = new TablaHash<Clave>(tamaño_tabla, fd);
+	tabla = new TablaHash<Clave>(size_tabla, fd);
 
 	do {
-		std::cout << "Elija una opción: " <<
+		std::cout << "\nElija una opción: \n" <<
 		"(0) Terminar programa\n(1) Insertar nuevo elemento\n" <<
 		"(2) Buscar elemento\nOpción: ";
 		std::cin >> opcion;
 
 		switch (opcion) {
 		case 1:
-			std::cout << "Introduzca el elemento a insertar: ";
+			std::cout << "\nIntroduzca el elemento a insertar: ";
 			std::cin >> elemento;
 			if (tabla->Insertar(elemento)) {
-				std::cout << "Se ha insertado el elemento\n";
+				std::cout << "\nSe ha insertado el elemento\n";
 			} else {
-				std::cout << "El elemento ya pertenecía a la tabla\n";
+				std::cout << "\nEl elemento ya pertenecía a la tabla\n";
 			}
 			break;
 		
 		case 2:
-			std::cout << "Introduzca el elemento a buscar: ";
+			std::cout << "\nIntroduzca el elemento a buscar: ";
 			std::cin >> elemento;
 			if (tabla->Buscar(elemento)) {
-				std::cout << "Se ha encontrado una coincidencia\n";
+				std::cout << "\nSe ha encontrado una coincidencia\n";
 			} else {
-				std::cout << "No se ha encontrado coincidencias\n";
+				std::cout << "\nNo se ha encontrado coincidencias\n";
 			}
 			break;
 		
@@ -72,4 +72,7 @@ int main() {
 
 	} while (opcion != 0);
 
+	//delete fd;
+	delete tabla;
+	//system("clear");
 }

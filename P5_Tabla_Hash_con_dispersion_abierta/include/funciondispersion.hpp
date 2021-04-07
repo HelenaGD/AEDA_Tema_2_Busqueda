@@ -3,5 +3,5 @@
 template<class Clave>
 class FuncionDispersion {
  public:
-  virtual unsingned operator() (const Clave& k) const = 0;
+  virtual unsigned operator() (const Clave& k) const = 0;
 };

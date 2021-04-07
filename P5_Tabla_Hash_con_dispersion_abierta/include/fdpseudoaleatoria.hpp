@@ -1,5 +1,7 @@
 #pragma once
 
+#include "funciondispersion.hpp"
+
 #include <stdlib.h>
 
 template<class Clave>
