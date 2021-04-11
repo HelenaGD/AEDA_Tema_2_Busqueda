@@ -1,6 +1,7 @@
 #pragma once
 
 #include "funciondispersion.hpp"
+#include "funcionexploracion.hpp"
 #include "lista.hpp"
 
 #include <vector>
@@ -8,7 +9,7 @@
 template<class Clave>
 class TablaHash {
  public:
-  TablaHash(int size_tabla, FuncionDispersion<Clave> *puntero_objeto);
+  TablaHash(int size_tabla, FuncionDispersion<Clave> *puntero_objeto, int size_position);
   ~TablaHash() {}
 
   bool Buscar(const Clave& X) const; // true si X del tipo Clave está guardado en la tabla hash
@@ -21,13 +22,20 @@ class TablaHash {
   int nDatos_; // Tamaño de la tabla
   std::vector<Lista<Clave>> vDatos_; // Array de nDatos posiciones en c/u de las cuales habŕa un contenedor de claves
   FuncionDispersion<Clave> *fd_;
+  int nSinonimos_; // Tamaño máximo dentro de c/posicion de la tabla
+  FuncionExploracion<Clave> *fe_;
 };
 
 template<class Clave>
-TablaHash<Clave>::TablaHash(int size_tabla, FuncionDispersion<Clave> *puntero_objeto) {
+TablaHash<Clave>::TablaHash(int size_tabla, FuncionDispersion<Clave> *puntero_objeto, int size_position) {
   nDatos_ = size_tabla;
   vDatos_.resize(nDatos_);
   fd_ = puntero_objeto;
+  nSinonimos_ = size_position;
+  for (int i : std::vector<Lista<Clave> vDatos_) {
+    vDatos_[i].set_max_size(nSinonimos_);
+    std::cout << "Tamaño vector " << i << " = " << vDatos_[i].get_max_size() << "\n";
+  }
 }
 
 template<class Clave>
