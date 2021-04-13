@@ -2,19 +2,30 @@
 
 #include "tablahash.hpp"
 #include "vector.hpp"
-#include "funciondispersion.hpp"
+//#include "funciondispersion.hpp"
 #include "fdmodulo.hpp"
 #include "fdpseudoaleatoria.hpp"
-#include "funcionexploracion.hpp"
+//#include "funcionexploracion.hpp"
 #include "felineal.hpp"
 #include "fecuadratica.hpp"
 #include "fedobledispersion.hpp"
 #include "feredispersion.hpp"
 
+#define INFINITO 999999
+
+using Clave = int;
+
+int RecogerCantidadPositiva(int cantidad_max = INFINITO) {
+	int cantidad = 0;
+	do {
+		std::cout << "\nInput: ";
+		std::cin >> cantidad;
+	} while ((cantidad <= 0) && (cantidad > cantidad_max));
+	return cantidad;
+}
 
 int main() {
 
-	using Clave = int;
 	FuncionDispersion<Clave> *fd;
 	FuncionExploracion<Clave> *fe;
 	TablaHash<Clave> *tabla;
@@ -23,25 +34,23 @@ int main() {
 	int tipo_dispersion = 0;
 	int tipo_exploracion = 0;
 	int opcion = 0;
-	int size_position = 0;
+	int cantidad_sinonimos = 0;
+	int cantidad_iteraciones = 0;
 
 	Clave elemento;
 
-	do {
-		std::cout << "\nIndique el tamaño de la tabla: ";
-		std::cin >> size_tabla;
-	} while (size_tabla <= 0);
+	std::cout << "\nIndique el tamaño de la tabla: ";
+	size_tabla = RecogerCantidadPositiva();
 
-	do {
-		std::cout << "\nIndique el tamaño del vector: ";
-		std::cin >> size_position;
-	} while (size_position <= 0);
+	std::cout << "\nIndique la cantidad de sinonimos que se permiten en la tabla: ";
+	cantidad_sinonimos = RecogerCantidadPositiva();
+	
+	std::cout << "\nIndique la cantidad de iteraciones: ";
+	cantidad_iteraciones = RecogerCantidadPositiva();
 
-	do {
-		std::cout << "\nIndique el tipo de función de dispersión a utilizar:\n"
-		<< "(1) Función módulo\n(2) Función pseudoaleatoria\nOpción: ";
-		std::cin >> tipo_dispersion;
-	} while ((tipo_dispersion <= 0) && (tipo_dispersion >2));
+	std::cout << "\nIndique el tipo de función de dispersión a utilizar:\n"
+						<< "(1) Función módulo\n(2) Función pseudoaleatoria\nOpción: ";
+	tipo_dispersion = RecogerCantidadPositiva(2);
 
 	switch (tipo_dispersion) {
 		case 1:
@@ -51,27 +60,27 @@ int main() {
 			fd = new fdPseudoaleatoria<Clave>(size_tabla);
 	}
 
-	do {
-		std::cout << "\nIndique el tipo de función de exploración a utilizar:\n"
+	std::cout << "\nIndique el tipo de función de exploración a utilizar:\n"
 		<< "(1) Exploración Lineal\n(2) Exploración Cuadrática\n"
 		<< "(3) Doble dispersión\n(4) Redispersión\nOpción: ";
-		std::cin >> tipo_exploracion;
-	} while ((tipo_exploracion <= 0) && (tipo_exploracion > 4));
+	tipo_exploracion = RecogerCantidadPositiva(4);
 
 	switch (tipo_exploracion) {
 		case 1:
-			fe = new feLineal<Clave>(size_tabla);
+			fe = new feLineal<Clave>;
 			break;
 		case 2:
+			fe = new feCuadratica<Clave>;
 			break;
 		case 3:
+			fe = new feDobleDispersion<Clave>(fd);
 			break;
 		case 4:
+			fe = new feReDispersion<Clave>(fd);
 			break;
 	}
 
-
-	tabla = new TablaHash<Clave>(size_tabla, fd, size_position);
+	tabla = new TablaHash<Clave>(size_tabla, cantidad_sinonimos, fd, fe);
 
 	do {
 		std::cout << "\nElija una opción: \n" <<
@@ -86,7 +95,7 @@ int main() {
 			if (tabla->Insertar(elemento)) {
 				std::cout << "\nSe ha insertado el elemento\n";
 			} else {
-				std::cout << "\nEl elemento ya pertenecía a la tabla\n";
+				std::cout << "\nEl elemento no se ha podido insertar en la tabla\n";
 			}
 			break;
 		

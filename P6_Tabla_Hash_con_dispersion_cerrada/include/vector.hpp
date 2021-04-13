@@ -5,7 +5,7 @@
 template<class Clave>
 class Vector {
  public:
-  Vector(int size_position);
+  Vector(int size = 0);
   ~Vector() {}
 
   bool Buscar(const Clave& X) const;
@@ -21,8 +21,8 @@ class Vector {
 };
 
 template<class Clave>
-Vector<Clave>::Vector(int size_position) {
-  nSinonimos_ = size_position;
+Vector<Clave>::Vector(int size) {
+  nSinonimos_ = size;
   //vDatos_.resize(nSinonimos_);
 }
 
