@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "tablahash.hpp"
-#include "lista.hpp"
+#include "vector.hpp"
 #include "funciondispersion.hpp"
 #include "fdmodulo.hpp"
 #include "fdpseudoaleatoria.hpp"

@@ -3,10 +3,10 @@
 #include <vector>
 
 template<class Clave>
-class Lista {
+class Vector {
  public:
-  Lista(int size_position);
-  ~Lista() {}
+  Vector(int size_position);
+  ~Vector() {}
 
   bool Buscar(const Clave& X) const;
   bool Insertar(const Clave& X);
@@ -21,13 +21,13 @@ class Lista {
 };
 
 template<class Clave>
-Lista<Clave>::Lista(int size_position) {
+Vector<Clave>::Vector(int size_position) {
   nSinonimos_ = size_position;
   //vDatos_.resize(nSinonimos_);
 }
 
 template<class Clave>
-bool Lista<Clave>::Buscar(const Clave& X) const {
+bool Vector<Clave>::Buscar(const Clave& X) const {
   bool coincidencia = false;
   int i = 0;
   while ((!coincidencia) && (i < vDatos_.size())) {
@@ -38,8 +38,8 @@ bool Lista<Clave>::Buscar(const Clave& X) const {
 }
 
 template<class Clave>
-bool Lista<Clave>::Insertar(const Clave& X) {
-  bool insertado = Buscar(X) ? false : true;
+bool Vector<Clave>::Insertar(const Clave& X) {
+  bool insertado = (Buscar(X) || EstaLleno()) ? false : true;
   if (insertado) {
     vDatos_.push_back(X);
   }
@@ -47,16 +47,16 @@ bool Lista<Clave>::Insertar(const Clave& X) {
 }
 
 template<class Clave>
-bool Lista<Clave>::EstaLleno() const {
+bool Vector<Clave>::EstaLleno() const {
   return (vDatos_.size() == get_max_size()); // true si está lleno, false si hay huecos
 }
 
 template<class Clave>
-int Lista<Clave>::get_max_size() const{
+int Vector<Clave>::get_max_size() const{
   return nSinonimos_;
 }
 
 template<class Clave>
-void Lista<Clave>::set_max_size(const int& max_size) {
+void Vector<Clave>::set_max_size(const int& max_size) {
   nSinonimos_ = max_size;
 }

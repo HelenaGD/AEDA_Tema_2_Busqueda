@@ -2,7 +2,7 @@
 
 #include "funciondispersion.hpp"
 #include "funcionexploracion.hpp"
-#include "lista.hpp"
+#include "vector.hpp"
 
 #include <vector>
 
@@ -20,7 +20,7 @@ class TablaHash {
 
  private:
   int nDatos_; // Tamaño de la tabla
-  std::vector<Lista<Clave>> vDatos_; // Array de nDatos posiciones en c/u de las cuales habŕa un contenedor de claves
+  std::vector<Vector<Clave>> vDatos_; // Array de nDatos posiciones en c/u de las cuales habŕa un contenedor de claves
   FuncionDispersion<Clave> *fd_;
   int nSinonimos_; // Tamaño máximo dentro de c/posicion de la tabla
   FuncionExploracion<Clave> *fe_;
@@ -32,7 +32,7 @@ TablaHash<Clave>::TablaHash(int size_tabla, FuncionDispersion<Clave> *puntero_ob
   vDatos_.resize(nDatos_);
   fd_ = puntero_objeto;
   nSinonimos_ = size_position;
-  for (int i : std::vector<Lista<Clave> vDatos_) {
+  for (int i : std::vector<Vector<Clave> vDatos_) {
     vDatos_[i].set_max_size(nSinonimos_);
     std::cout << "Tamaño vector " << i << " = " << vDatos_[i].get_max_size() << "\n";
   }
