@@ -14,6 +14,7 @@ class Vector {
 
   int get_max_size() const;
   void set_max_size(const int& max_size);
+  std::vector<Clave> get_vector();
 
  private:
   std::vector<Clave> vDatos_;
@@ -59,4 +60,9 @@ int Vector<Clave>::get_max_size() const{
 template<class Clave>
 void Vector<Clave>::set_max_size(const int& max_size) {
   nSinonimos_ = max_size;
+}
+
+template<class Clave>
+std::vector<Clave> Vector<Clave>::get_vector() {
+  return vDatos_;
 }

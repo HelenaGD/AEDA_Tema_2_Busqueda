@@ -16,6 +16,7 @@ class TablaHash {
   bool Insertar(const Clave& X); // true si puede insertar el valor X del tipo Clave en al tabla hash
                                 // false si el valor ya está guardado en la tabla
 
+  void printTabla();
   int get_sizeTabla() const;
 
  private:
@@ -42,15 +43,50 @@ TablaHash<Clave>::TablaHash(int size_tabla, int cantidad_sinonimos, FuncionDispe
 
 template<class Clave>
 bool TablaHash<Clave>::Buscar(const Clave& X) const {
-  return vDatos_.at(fd_->operator()(X)).Buscar(X);
+  bool coincidencia = true;
+  int j = 0;
+  
+  if (!vDatos_.at(fd_->operator()(X)).Buscar(X)) { // No está en la tabla
+    do {
+      coincidencia = vDatos_.at((fd_->operator()(X) + fe_->operator()(X,j)) % nDatos_).Buscar(X);
+      ++j;
+    } while ((coincidencia == false) && (j < vDatos_.size()));
+  } 
+
+  std::cout << "Ha hecho " << j << " exploraciones cuando buscaba\n";
+
+  return coincidencia;
 }
 
 template<class Clave>
 bool TablaHash<Clave>::Insertar(const Clave& X) {
-  return vDatos_.at(fd_->operator()(X)).Insertar(X);
+  int j = 0;
+  bool insertado = true;
+
+  if ((!Buscar(X)) && (!vDatos_.at(fd_->operator()(X)).Insertar(X))) {
+    do {
+      insertado = vDatos_.at((fd_->operator()(X) + fe_->operator()(X,j)) % nDatos_).Insertar(X);
+      ++j;
+    } while ((insertado == false) && (j < vDatos_.size()));
+  }
+
+  std::cout << "Ha hecho " << j << " exploraciones cuando insertaba\n";
+
+  return insertado;
 }
 
 template<class Clave>
 int TablaHash<Clave>::get_sizeTabla() const {
   return nDatos_;
+}
+
+template<class Clave>
+void TablaHash<Clave>::printTabla() {
+  for (int i = 0; i < vDatos_.size(); ++i) {
+    std::cout << "Celda " << i << ": ";
+    for (int j = 0; j < vDatos_.at(i).get_vector().size(); ++j) {
+      std::cout << vDatos_.at(i).get_vector().at(j) << " ";
+    }
+    std::cout << std::endl;
+  }
 }

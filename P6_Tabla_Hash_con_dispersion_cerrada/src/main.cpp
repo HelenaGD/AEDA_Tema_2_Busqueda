@@ -35,7 +35,7 @@ int main() {
 	int tipo_exploracion = 0;
 	int opcion = 0;
 	int cantidad_sinonimos = 0;
-	int cantidad_iteraciones = 0;
+	// int cantidad_iteraciones = 0;
 
 	Clave elemento;
 
@@ -45,8 +45,8 @@ int main() {
 	std::cout << "\nIndique la cantidad de sinonimos que se permiten en la tabla: ";
 	cantidad_sinonimos = RecogerCantidadPositiva();
 	
-	std::cout << "\nIndique la cantidad de iteraciones: ";
-	cantidad_iteraciones = RecogerCantidadPositiva();
+	// std::cout << "\nIndique la cantidad de iteraciones maximas: ";
+	// cantidad_iteraciones = RecogerCantidadPositiva();
 
 	std::cout << "\nIndique el tipo de función de dispersión a utilizar:\n"
 						<< "(1) Función módulo\n(2) Función pseudoaleatoria\nOpción: ";
@@ -76,7 +76,7 @@ int main() {
 			fe = new feDobleDispersion<Clave>(fd);
 			break;
 		case 4:
-			fe = new feReDispersion<Clave>(fd);
+			fe = new feReDispersion<Clave>;
 			break;
 	}
 
@@ -112,6 +112,8 @@ int main() {
 		default:
 			break;
 		}
+
+		tabla->printTabla();
 
 	} while (opcion != 0);
 

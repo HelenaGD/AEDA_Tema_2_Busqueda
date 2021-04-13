@@ -6,15 +6,12 @@
 template<class Clave>
 class feReDispersion: public FuncionExploracion<Clave> {
  public:
-  feReDispersion(FuncionDispersion<Clave> *fd) {
-    fd_ = fd;
-  }
-
   unsigned operator() (const Clave& k, unsigned i) const {
-    //fd_->operator()(k) * i
-    //return pow(i,2);
-    return 0;
+    srand(k);
+    unsigned solucion;
+    for (int j = 0; j<i; ++j) {
+      solucion = rand();
+    }
+    return solucion;
   }
- private:
-  FuncionDispersion<Clave> *fd_;
 };
